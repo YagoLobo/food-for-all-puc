@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Cadastro";
+    Layout = null;
+}
+
+<!-- Importação dos estilos CSS -->
+<link rel="stylesheet" href="~/css/styles.css" />
+<link rel="stylesheet" href="~/css/cadastro.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+<main class="cadastro-main">
+    <div class="container">
+        <div class="auth-wrapper">
+            <section class="auth-card">
+                <h2 class="auth-title">Crie sua conta</h2>
+                <p class="auth-subtitle">Selecione o tipo de cadastro</p>
+
+                <div class="user-type-grid">
+                    <div class="user-type-card">
+                        <div class="type-icon">
+                            <i class="fas fa-store-alt fa-3x"></i>
+                        </div>
+                        <h3>Supermercado</h3>
+                        <p class="type-description">Cadastre-se para doar alimentos</p>
+                        <form asp-controller="EstabelecimentoDoadors" asp-action="Create" method="get">
+                            <button class="btn type-btn" type="submit">Cadastrar Estabelecimento</button>
+                        </form>
+                    </div>
+
+                    <div class="user-type-card">
+                        <div class="type-icon">
+                            <i class="fas fa-utensils fa-3x"></i>
+                        </div>
+                        <h3>Cozinha Solidária</h3>
+                        <p class="type-description">Receba doações e ajude comunidades</p>
+                        <form asp-controller="EstabelecimentoReceptors" asp-action="Create" method="get">
+                            <button class="btn type-btn" type="submit">Cadastrar Cozinha</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>

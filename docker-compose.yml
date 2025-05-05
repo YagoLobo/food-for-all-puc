@@ -1,0 +1,6 @@
+services:
+  foodforall:
+    image: ${DOCKER_REGISTRY-}foodforall
+    build:
+      context: .
+      dockerfile: FoodforAll/Dockerfile
