@@ -1,26 +1,59 @@
-﻿@using FoodforAll.Models.ViewModels
-@model LoginViewModel
+﻿@model FoodforAll.Models.ViewModels.LoginViewModel
 
-<h2>Login</h2>
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
 
-<form asp-action="Login" method="post">
-    <div>
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
+<link rel="stylesheet" href="~/css/styles.css" />
+<link rel="stylesheet" href="~/css/login.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+<main class="login-main">
+    <div class="container">
+        <div class="auth-wrapper">
+            <section class="auth-card">
+                <div class="auth-header">
+                    <a asp-action="EscolherTipo" asp-controller="Auth" class="back-btn">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <h2 class="auth-title">Login</h2>
+                </div>
+
+                <form asp-action="Login" method="post" class="auth-form">
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-container">
+                        <div class="form-group">
+                            <label asp-for="Email"></label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input asp-for="Email" class="form-control" />
+                            </div>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Senha"></label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-lock"></i>
+                                <input asp-for="Senha" type="password" class="form-control" />
+                            </div>
+                            <span asp-validation-for="Senha" class="text-danger"></span>
+                        </div>
+
+                        <!-- Campo oculto com o tipo (Doador ou Receptor) -->
+                        <input type="hidden" asp-for="Tipo" value="@ViewBag.Tipo" />
+
+                        <button type="submit" class="auth-submit">Entrar</button>
+                        <a asp-controller="Cadastro" asp-action="Index" class="voltar-btn">Não tem conta? Cadastre-se</a>
+                    </div>
+                </form>
+            </section>
+        </div>
     </div>
+</main>
 
-    <div>
-        <label asp-for="Senha"></label>
-        <input asp-for="Senha" class="form-control" type="password" />
-        <span asp-validation-for="Senha" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="Tipo"></label>
-        <select asp-for="Tipo" class="form-select" asp-items="Html.GetEnumSelectList<TipoLogin>()"></select>
-        <span asp-validation-for="Tipo" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary mt-3">Entrar</button>
-</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

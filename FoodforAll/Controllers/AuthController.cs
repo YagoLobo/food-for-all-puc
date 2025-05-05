@@ -20,7 +20,21 @@ namespace FoodforAll.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login() => View();
+        public IActionResult EscolherTipo()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Login(string tipo)
+        {
+            if (Enum.TryParse<TipoLogin>(tipo, out var tipoEnum))
+                ViewBag.Tipo = tipoEnum;
+            else
+                ViewBag.Tipo = TipoLogin.Doador;
+
+            return View(new LoginViewModel { Tipo = ViewBag.Tipo });
+        }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
