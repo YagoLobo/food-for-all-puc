@@ -20,21 +20,7 @@ namespace FoodforAll.Controllers
         }
 
         [HttpGet]
-        public IActionResult EscolherTipo()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult Login(string tipo)
-        {
-            if (Enum.TryParse<TipoLogin>(tipo, out var tipoEnum))
-                ViewBag.Tipo = tipoEnum;
-            else
-                ViewBag.Tipo = TipoLogin.Doador;
-
-            return View(new LoginViewModel { Tipo = ViewBag.Tipo });
-        }
+        public IActionResult Login() => View();
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -43,21 +29,21 @@ namespace FoodforAll.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            if (model.Tipo == TipoLogin.Doador)
+            if (model.Tipo == TipoLogin.EstabelecimentoDoador)
             {
-                var usuario = await _context.EstabelecimentosDoadores.FirstOrDefaultAsync(e => e.Email == model.Email);
+                var usuario = await _context.Usuarios.FirstOrDefaultAsync(e => e.Email == model.Email);
                 if (usuario == null)
-                     ModelState.AddModelError("", "Doador não encontrado ou senha incorreta.");
+                    ModelState.AddModelError("", "Doador não encontrado ou senha incorreta.");
                 else
                 {
-                    var senhaOk = BCrypt.Net.BCrypt.Verify(model.Senha, usuario.Senha);
+                    var senhaOk = BCrypt.Net.BCrypt.Verify(model.Senha, usuario.Password);
                     if (senhaOk)
                     {
                         var claims = new List<Claim>
                         {
-                            new Claim(ClaimTypes.Name, usuario.NomeFantasia),
+                            new Claim(ClaimTypes.Name, usuario.Nome),
                             new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
-                            new Claim(ClaimTypes.Role, TipoLogin.Doador.ToString())
+                            new Claim(ClaimTypes.Role, TipoLogin.EstabelecimentoDoador.ToString())
                         };
 
                         var usuarioIdentity = new ClaimsIdentity(claims, "login");
@@ -72,7 +58,7 @@ namespace FoodforAll.Controllers
 
                         await HttpContext.SignInAsync(principal, props);
 
-                        return RedirectToAction("Index", "EstabelecimentoDoadors");
+                        return RedirectToAction("Index", "EstabelecimentoDoadores");
                     }
                     else
                         ModelState.AddModelError("", "Doador não encontrado ou senha incorreta.");
@@ -80,19 +66,19 @@ namespace FoodforAll.Controllers
             }
             else
             {
-                var usuario = await _context.EstabelecimentosReceptores.FirstOrDefaultAsync(e => e.Email == model.Email);
+                var usuario = await _context.Usuarios.FirstOrDefaultAsync(e => e.Email == model.Email);
                 if (usuario == null)
                     ModelState.AddModelError("", "Doador não encontrado ou senha incorreta.");
                 else
                 {
-                    var senhaOk = BCrypt.Net.BCrypt.Verify(model.Senha, usuario.Senha);
+                    var senhaOk = BCrypt.Net.BCrypt.Verify(model.Senha, usuario.Password);
                     if (senhaOk)
                     {
                         var claims = new List<Claim>
                         {
                             new Claim(ClaimTypes.Name, usuario.Nome),
                             new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
-                            new Claim(ClaimTypes.Role, TipoLogin.Doador.ToString())
+                            new Claim(ClaimTypes.Role, TipoLogin.EstabelecimentoReceptor.ToString())
                         };
 
                         var usuarioIdentity = new ClaimsIdentity(claims, "login");
@@ -107,7 +93,7 @@ namespace FoodforAll.Controllers
 
                         await HttpContext.SignInAsync(principal, props);
 
-                        return RedirectToAction("Index", "EstabelecimentosReceptors");
+                        return RedirectToAction("Index", "EstabelecimentoReceptores");
                     }
                     else
                         ModelState.AddModelError("", "Doador não encontrado ou senha incorreta.");

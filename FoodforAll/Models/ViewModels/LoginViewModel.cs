@@ -4,8 +4,9 @@ namespace FoodforAll.Models.ViewModels
 {
     public enum TipoLogin
     {
-        Doador,
-        Receptor
+        Admin,
+        EstabelecimentoDoador,
+        EstabelecimentoReceptor
     }
 
     public class LoginViewModel

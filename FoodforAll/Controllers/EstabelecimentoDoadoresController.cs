@@ -6,25 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FoodforAll.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FoodforAll.Controllers
 {
-    public class EstabelecimentoDoadorsController : Controller
+
+    public class EstabelecimentoDoadoresController : Controller
     {
         private readonly AppDbContext _context;
 
-        public EstabelecimentoDoadorsController(AppDbContext context)
+        public EstabelecimentoDoadoresController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: EstabelecimentoDoadors
+        // GET: EstabelecimentoDoadores
         public async Task<IActionResult> Index()
         {
             return View(await _context.EstabelecimentosDoadores.ToListAsync());
         }
 
-        // GET: EstabelecimentoDoadors/Details/5
+        // GET: EstabelecimentoDoadores/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -42,21 +44,23 @@ namespace FoodforAll.Controllers
             return View(estabelecimentoDoador);
         }
 
-        // GET: EstabelecimentoDoadors/Create
+        // GET: EstabelecimentoDoadores/Create
+        [Authorize(Policy = "EstabelecimentoDoador")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: EstabelecimentoDoadors/Create
-
+        // POST: EstabelecimentoDoadores/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Policy = "EstabelecimentoDoador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CNPJ,NomeFantasia,Categoria,Senha,Email,Telefone,Endereco,CreatedAt,UpdatedAt")] EstabelecimentoDoador estabelecimentoDoador)
+        public async Task<IActionResult> Create([Bind("Id,CNPJ,NomeFantasia,TransporteProprio")] EstabelecimentoDoador estabelecimentoDoador)
         {
             if (ModelState.IsValid)
             {
-                estabelecimentoDoador.Senha = BCrypt.Net.BCrypt.HashPassword(estabelecimentoDoador.Senha);
                 _context.Add(estabelecimentoDoador);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -64,7 +68,8 @@ namespace FoodforAll.Controllers
             return View(estabelecimentoDoador);
         }
 
-        // GET: EstabelecimentoDoadors/Edit/5
+        // GET: EstabelecimentoDoadores/Edit/5
+        [Authorize(Policy = "EstabelecimentoDoador")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,11 +85,10 @@ namespace FoodforAll.Controllers
             return View(estabelecimentoDoador);
         }
 
-        // POST: EstabelecimentoDoadors/Edit/5
-
+        [Authorize(Policy = "EstabelecimentoDoador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CNPJ,NomeFantasia,Categoria,Senha,Email,Telefone,Endereco,CreatedAt,UpdatedAt")] EstabelecimentoDoador estabelecimentoDoador)
+        public async Task<IActionResult> Edit(int? id, [Bind("Id,CNPJ,NomeFantasia,TransporteProprio")] EstabelecimentoDoador estabelecimentoDoador)
         {
             if (id != estabelecimentoDoador.Id)
             {
@@ -95,7 +99,6 @@ namespace FoodforAll.Controllers
             {
                 try
                 {
-                    estabelecimentoDoador.Senha = BCrypt.Net.BCrypt.HashPassword(estabelecimentoDoador.Senha);
                     _context.Update(estabelecimentoDoador);
                     await _context.SaveChangesAsync();
                 }
@@ -115,7 +118,7 @@ namespace FoodforAll.Controllers
             return View(estabelecimentoDoador);
         }
 
-        // GET: EstabelecimentoDoadors/Delete/5
+        // GET: EstabelecimentoDoadores/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,10 +136,10 @@ namespace FoodforAll.Controllers
             return View(estabelecimentoDoador);
         }
 
-        // POST: EstabelecimentoDoadors/Delete/5
+        // POST: EstabelecimentoDoadores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             var estabelecimentoDoador = await _context.EstabelecimentosDoadores.FindAsync(id);
             if (estabelecimentoDoador != null)
@@ -148,7 +151,7 @@ namespace FoodforAll.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EstabelecimentoDoadorExists(int id)
+        private bool EstabelecimentoDoadorExists(int? id)
         {
             return _context.EstabelecimentosDoadores.Any(e => e.Id == id);
         }

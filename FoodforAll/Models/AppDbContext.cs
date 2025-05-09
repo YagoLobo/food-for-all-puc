@@ -9,6 +9,7 @@ namespace FoodforAll.Models
 
         public DbSet<EstabelecimentoDoador> EstabelecimentosDoadores { get; set; }
         public DbSet<EstabelecimentoReceptor> EstabelecimentosReceptores { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
 
     }
 }

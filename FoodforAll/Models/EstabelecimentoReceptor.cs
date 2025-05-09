@@ -7,32 +7,24 @@ namespace FoodforAll.Models
     public class EstabelecimentoReceptor
     {
         [Key]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required(ErrorMessage = "Obrigatorio  informar o email!")]
-        public required string Nome { get; set; }
+        public required string? NomeReceptor { get; set; }
 
         [Required(ErrorMessage = "Obrigatorio  informar o Resgistro do Governo!")]
         public string? RegistroGoverno { get; set; }
 
         [Required(ErrorMessage = "Obrigatorio  informar se esta aprovada no programa do governo!")]
-        public bool Aprovada { get; set; }
+        public bool? Aprovada { get; set; }
 
         public int? RefeicoesDiarias { get; set; }
 
-        [Required(ErrorMessage = "Obrigatorio  informar a senha")]
-        [DataType(DataType.Password)]
-        public required string Senha { get; set; }
+        [Required(ErrorMessage = "Obrigatorio informar o responsavel tecnico!")]
+        public string? ResponsavelTecnico { get; set; }
 
-        [Required(ErrorMessage = "Obrigatorio  informar o email!")]
-        public string? Email { get; set; }
+        public string? HorarioRecebimentoDoacoes { get; set; }
 
-
-        [Required(ErrorMessage = "Obrigatorio  informar o telefone para contato!")]
-        public string? Telefone { get; set; }
-
-        [Required(ErrorMessage = "Obrigatorio  informar o endereco!")]
-        public string? Endereco { get; set; }
-
+        public Usuario? Usuario { get; set; }
     }
 }
