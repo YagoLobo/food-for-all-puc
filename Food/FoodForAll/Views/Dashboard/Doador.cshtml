@@ -1,0 +1,10 @@
+@{
+    ViewData["Title"] = "Dashboard Doador";
+}
+<h1>Bem-vindo ao Painel do Doador!</h1>
+<p>Aqui você pode gerenciar seus produtos e doações.</p>
+<ul>
+    <li><a asp-controller="Produto" asp-action="Index">Meus Produtos</a></li>
+    <li><a asp-controller="Doacao" asp-action="Index">Minhas Doações</a></li>
+    <li><a asp-controller="EstabelecimentoDoadors" asp-action="Edit" asp-route-id="@User.FindFirst("NameIdentifier")?.Value">Editar Perfil</a></li>
+</ul> 

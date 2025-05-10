@@ -1,0 +1,68 @@
+@model FoodForAll.Models.EstabelecimentoReceptor
+
+@{
+    ViewData["Title"] = "Cadastrar Estabelecimento Receptor";
+}
+
+<h1>Cadastrar Estabelecimento Receptor</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Nome"></label>
+        <input asp-for="Nome" class="form-control" />
+        <span asp-validation-for="Nome" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="RegistroGoverno"></label>
+        <input asp-for="RegistroGoverno" class="form-control" />
+        <span asp-validation-for="RegistroGoverno" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="RefeicoesDiarias"></label>
+        <input asp-for="RefeicoesDiarias" type="number" class="form-control" />
+        <span asp-validation-for="RefeicoesDiarias" class="text-danger"></span>
+    </div>
+    <div class="form-group form-check">
+        <label class="form-check-label">
+            <input class="form-check-input" asp-for="Aprovada" /> @Html.DisplayNameFor(model => model.Aprovada)
+        </label>
+    </div>
+    <div class="form-group">
+        <label asp-for="Telefone"></label>
+        <input asp-for="Telefone" class="form-control" />
+        <span asp-validation-for="Telefone" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Endereco"></label>
+        <input asp-for="Endereco" class="form-control" />
+        <span asp-validation-for="Endereco" class="text-danger"></span>
+    </div>
+    <hr />
+    <h4>Dados do Usuário Vinculado</h4>
+    <div class="form-group">
+        <label for="nomeUsuario">Nome do Usuário</label>
+        <input name="nomeUsuario" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input name="email" type="email" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="senha">Senha</label>
+        <input name="senha" type="password" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="contato">Contato</label>
+        <input name="contato" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="endereco">Endereço do Usuário</label>
+        <input name="endereco" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-success">Cadastrar</button>
+    <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+} 

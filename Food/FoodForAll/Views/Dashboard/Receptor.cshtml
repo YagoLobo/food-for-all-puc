@@ -1,0 +1,9 @@
+@{
+    ViewData["Title"] = "Dashboard Receptor";
+}
+<h1>Bem-vindo ao Painel do Receptor!</h1>
+<p>Aqui você pode acompanhar as doações recebidas e atualizar seu perfil.</p>
+<ul>
+    <li><a asp-controller="Doacao" asp-action="Index">Doações Recebidas</a></li>
+    <li><a asp-controller="EstabelecimentoReceptors" asp-action="Edit" asp-route-id="@User.FindFirst("NameIdentifier")?.Value">Editar Perfil</a></li>
+</ul> 

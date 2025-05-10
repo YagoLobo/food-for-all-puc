@@ -1,0 +1,12 @@
+@{
+    ViewData["Title"] = "Dashboard Admin";
+}
+<h1>Bem-vindo ao Painel do Administrador!</h1>
+<p>Aqui você pode gerenciar todos os usuários, doadores, receptores, produtos e doações.</p>
+<ul>
+    <li><a asp-controller="EstabelecimentoDoadors" asp-action="Index">Gerenciar Doadores</a></li>
+    <li><a asp-controller="EstabelecimentoReceptors" asp-action="Index">Gerenciar Receptores</a></li>
+    <li><a asp-controller="Produto" asp-action="Index">Gerenciar Produtos</a></li>
+    <li><a asp-controller="Doacao" asp-action="Index">Gerenciar Doações</a></li>
+    <!-- Adicione mais links administrativos conforme necessário -->
+</ul> 
